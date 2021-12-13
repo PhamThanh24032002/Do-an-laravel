@@ -1,0 +1,41 @@
+// BƯỚC 1: LẤY DANH SÁCH CATEGORIES
+$conn = mysqli_connect('localhost', 'root', 'vertrigo', 'demo');
+ 
+$sql = 'SELECT * FROM categories';
+ 
+$result = mysqli_query($conn, $sql);
+ 
+$categories = array();
+ 
+while ($row = mysqli_fetch_assoc($result)){
+    $categories[] = $row;
+}
+ 
+// BƯỚC 2: HÀM ĐỆ QUY HIỂN THỊ CATEGORIES
+function tableCategories($categories, $parent_id = 0, $char = '')
+{
+    foreach ($categories as $key => $item)
+    {
+        // Nếu là chuyên mục con thì hiển thị
+        if ($item->parent_id == $parent_id)
+        {
+            echo '<tr>';
+                echo '<td>';
+                    echo $char . $item->name;
+                echo '</td>';
+            echo '</tr>';
+             
+            // Xóa chuyên mục đã lặp
+            unset($categories[$key]);
+             
+            // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
+            showCategories($categories, $item->id, $char.'---');
+        }
+    }
+}
+$blog = Blog::leftjoin('Admin','Admin.id','Blog.admin_id')
+                        // ->leftjoin('Customer','Customer.id','Blog.customer_id')
+                        ->select('Customer.name as customer_name','Customer.avatar as customer_avt','Admin.name as admin_name','Admin.avatar as admin_avt','Blog.*')
+                        ->paginate(5);
+{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y');}}\
+{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y');}}
